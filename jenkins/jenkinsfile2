@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools {
+      maven "maven_360"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+            git 'https://github.com/JagdishMane/simple-java-maven-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+                sh 'echo "test"'
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
+}
